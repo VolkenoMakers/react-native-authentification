@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Register from "./Register";
+import { Login, Register } from "./Auth";
 import Colors from "./constants/Colors";
 import { Alert } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -8,43 +8,54 @@ import Icon from "react-native-vector-icons/Ionicons";
 export default function App() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  const [first_name, setFirstName] = React.useState("");
-  const [last_name, setLastName] = React.useState("");
-  const [adresse, setAdresse] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [password_confirmation, setPassword_confirmation] = React.useState("");
   const [errors, setErrors] = React.useState({});
 
   const submit = async () => {
     Alert.alert("Félicitation", "Connexion réussie");
   };
 
-  console.log("password_confirmation", password_confirmation);
-
   return (
     <View style={styles.container}>
-      <Register
+      <Login
         OnSubmit={submit}
-        pressRedirectLogin={() => {
+        pressForgotPassword={() => {
+          Alert.alert("change passWord");
+        }}
+        pressRedirectRegister={() => {
           Alert.alert("redirect regidter");
         }}
         showPassword={showPassword}
         setShowPassword={setShowPassword}
-        //first_name={first_name}
-        setFirstName={setFirstName}
-        //last_name={last_name}
-        setLastName={setLastName}
         email={email}
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
-        password_confirmation={password_confirmation}
-        setPassword_confirmation={setPassword_confirmation}
-        //adresse={adresse}
-        setAdresse={setAdresse}
         errors={errors}
         setErrors={setErrors}
-        textRedirectLogin="Je n'ai pas encore de compte"
+        title={"Login"}
+        forgotPasswordText={"Mot de passe oublié ?"}
+        forgotPasswordTextStyle={{
+          color: "red",
+          textAlign: "center",
+        }}
+        titleStyle={{
+          color: "red",
+          marginVertical: 30,
+          fontWeight: "bold",
+          fontSize: 36,
+          textAlign: "center",
+        }}
+        textConnexion={"Je me connect"}
+        leftIconPassword={
+          <Icon name="ios-lock-open-outline" size={20} color={Colors.bgApp2} />
+        }
+        leftIconEmail={
+          <Icon name="mail-outline" size={20} color={Colors.bgApp2} />
+        }
+        textRedirectRegisterStyle={{ color: "red" }}
+        textRedirectRegister="Je n'ai pas encore de compte"
+        styles={{}}
       />
     </View>
   );
