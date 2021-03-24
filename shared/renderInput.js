@@ -71,14 +71,14 @@ export function RenderButton({
   Schema,
   startLoad,
   endLoad,
-  email,
-  password,
   setErrors,
   submit,
+  value,
   styles = {},
   titleStyle = {},
   buttonStyle = {},
 }) {
+  console.log("value", value);
   return (
     <APpButton
       title={title}
@@ -88,30 +88,16 @@ export function RenderButton({
       titleStyle={titleStyle}
       buttonStyle={buttonStyle}
       onPress={async () => {
-        let valide = await validate(
-          Schema,
-          startLoad,
-          endLoad,
-          email,
-          password,
-          submit
-        );
+        let valide = await validate(Schema, startLoad, endLoad, value, submit);
         setErrors(valide);
       }}
     />
   );
 }
 
-export const validate = async (
-  Schema,
-  startLoad,
-  endLoad,
-  email,
-  password,
-  submit
-) => {
+export const validate = async (Schema, startLoad, endLoad, value, submit) => {
   startLoad;
-  let valide = await Schema.validate({ email, password }, { abortEarly: false })
+  let valide = await Schema.validate(value, { abortEarly: false })
     .then(() => {
       endLoad;
       submit();

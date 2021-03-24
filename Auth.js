@@ -62,6 +62,17 @@ export function Register({
     last_name:
       last_name !== false && Yup.string().min(1).required().label("Nom"),
     password: Yup.string().required().label("Mot de passe"),
+    password_confirmation: Yup.string()
+      .required()
+      .label("Confirmer Mot de Passe")
+      .test(
+        "passwords-match",
+        "Confirmer mot de passe doit correspondre Mot De Passe",
+        function (value) {
+          console.log("value", value);
+          return this.parent.password === value;
+        }
+      ),
   });
   const submit = () => {
     if (password === password_confirmation) {
@@ -248,6 +259,13 @@ export function Register({
             setErrors={(error) => setErrors(error)}
             email={email}
             password={password}
+            value={{
+              email,
+              password,
+              password_confirmation,
+              first_name: first_name !== false,
+              last_name: last_name !== false,
+            }}
             submit={submit}
             styles={{ backgroundColor: "red" }}
             titleStyle={connexionTitleStyle}
@@ -411,8 +429,7 @@ export function Login({
           startLoad={() => setLoading(true)}
           endLoad={() => setLoading(false)}
           setErrors={(error) => setErrors(error)}
-          email={email}
-          password={password}
+          value={{ email, password }}
           submit={submit}
           styles={{ backgroundColor: "red" }}
           titleStyle={connexionTitleStyle}
@@ -467,7 +484,6 @@ export function RequestPasswordReset({
     OnSubmit();
   };
   const [loading, setLoading] = React.useState(false);
-  const [password, setPassword] = React.useState(false);
 
   let onChange = (text) => {
     setEmail(text);
@@ -511,8 +527,7 @@ export function RequestPasswordReset({
           startLoad={() => setLoading(true)}
           endLoad={() => setLoading(false)}
           setErrors={(error) => setErrors(error)}
-          email={email}
-          password={password}
+          value={{ email }}
           submit={submit}
           styles={{ backgroundColor: "red" }}
           titleStyle={connexionTitleStyle}
@@ -576,11 +591,21 @@ export function ResetPassword({
     password: Yup.string().required().label("Nouveau Mot de Passe"),
     confrimPassword: Yup.string()
       .required()
-      .label("Confirmer Nouveau Mot de Passe"),
+      .label("Confirmer Nouveau Mot de Passe")
+      .test(
+        "passwords-match",
+        "Confirmer mot de passe doit correspondre Mot De Passe",
+        function (value) {
+          console.log("value", value);
+          return this.parent.password === value;
+        }
+      ),
   });
   const submit = () => {
     OnSubmit();
   };
+
+  console.log("confrimPassword", confrimPassword);
   const [loading, setLoading] = React.useState(false);
 
   let onChange = (text) => {
@@ -596,6 +621,10 @@ export function ResetPassword({
 
   let onChangeCode = (text) => {
     setCode(text);
+  };
+
+  let value = {
+    email,
   };
   return (
     <View
@@ -700,8 +729,7 @@ export function ResetPassword({
           startLoad={() => setLoading(true)}
           endLoad={() => setLoading(false)}
           setErrors={(error) => setErrors(error)}
-          email={email}
-          password={password}
+          value={{ email, code, password, confrimPassword }}
           submit={submit}
           styles={{ backgroundColor: "red" }}
           titleStyle={connexionTitleStyle}
