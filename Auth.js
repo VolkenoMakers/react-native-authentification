@@ -441,3 +441,273 @@ export function Login({
     </View>
   );
 }
+
+export function RequestPasswordReset({
+  setErrors,
+  errors,
+  setEmail,
+  email,
+  title = "Veuillez entrer votre email Nous vous enverrons un lien pour modifier le mot de passe",
+  labelEmail = "Adresse mail",
+  titleStyle = {},
+  textConnexion = "Valider",
+  connexionTitleStyle = {},
+  connexionButtonStyle = {},
+  leftIconEmail = {},
+  textRedirectLogin,
+  textRedirectLoginStyle = {},
+  styles = {},
+  OnSubmit,
+  pressRedirectLogin,
+}) {
+  const Schema = Yup.object().shape({
+    email: Yup.string().email().required().label("Adresse Mail"),
+  });
+  const submit = () => {
+    OnSubmit();
+  };
+  const [loading, setLoading] = React.useState(false);
+  const [password, setPassword] = React.useState(false);
+
+  let onChange = (text) => {
+    setEmail(text);
+  };
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        paddingHorizontal: 20,
+        justifyContent: "center",
+        ...styles,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 16,
+          color: "rgba(0,0,0,.6)",
+          ...titleStyle,
+        }}
+      >
+        {title}
+      </Text>
+      <View style={{ marginTop: Dimensions.get("window").height * 0.05 }}>
+        <RenderInput
+          value={email}
+          errors={errors}
+          error={errors?.email}
+          label={labelEmail}
+          onChange={onChange}
+          leftIcon={leftIconEmail}
+          textContentType={"username"}
+          autoCapitalize={"none"}
+          keyboardType={"email-address"}
+        />
+      </View>
+      <View style={{ marginTop: Dimensions.get("window").height * 0.05 }}>
+        <RenderButton
+          title={textConnexion}
+          Schema={Schema}
+          startLoad={() => setLoading(true)}
+          endLoad={() => setLoading(false)}
+          setErrors={(error) => setErrors(error)}
+          email={email}
+          password={password}
+          submit={submit}
+          styles={{ backgroundColor: "red" }}
+          titleStyle={connexionTitleStyle}
+          buttonStyle={connexionButtonStyle}
+        />
+      </View>
+      <TouchableOpacity
+        style={{
+          alignSelf: "flex-end",
+          marginTop: Dimensions.get("window").height * 0.05,
+        }}
+        onPress={pressRedirectLogin}
+      >
+        <Text
+          style={{
+            color: Colors.bgApp,
+            textAlign: "center",
+            fontSize: 14,
+            ...textRedirectLoginStyle,
+          }}
+        >
+          {textRedirectLogin}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+export function ResetPassword({
+  setErrors,
+  errors,
+  setPassword,
+  setConfrimPassword,
+  password,
+  confrimPassword,
+  setEmail,
+  setCode,
+  email,
+  code,
+  setShowPassword,
+  showPassword = false,
+  title = "Veuillez entrer votre code puis modifier votre mot de passe",
+  labelEmail = "Adresse mail",
+  labelCode = "Code",
+  labelPassword = "Nouveau Mot de Passe",
+  labelConfrimPassword = "Confirmer Nouveau Mot de Passe",
+  titleStyle = {},
+  colorIconPassword = Colors.bgApp,
+  textConnexion = "Valider",
+  connexionTitleStyle = {},
+  connexionButtonStyle = {},
+  leftIconPassword = {},
+  leftIconEmail = {},
+  leftIconCode = {},
+  styles = {},
+  OnSubmit,
+}) {
+  const Schema = Yup.object().shape({
+    email: Yup.string().email().required().label("Adresse Mail"),
+    code: Yup.string().required().label("code"),
+    password: Yup.string().required().label("Nouveau Mot de Passe"),
+    confrimPassword: Yup.string()
+      .required()
+      .label("Confirmer Nouveau Mot de Passe"),
+  });
+  const submit = () => {
+    OnSubmit();
+  };
+  const [loading, setLoading] = React.useState(false);
+
+  let onChange = (text) => {
+    setEmail(text);
+  };
+  let onChangePassword = (text) => {
+    setPassword(text);
+  };
+
+  let onChangeConfrimPassword = (text) => {
+    setConfrimPassword(text);
+  };
+
+  let onChangeCode = (text) => {
+    setCode(text);
+  };
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        paddingHorizontal: 20,
+        ...styles,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 16,
+          color: "rgba(0,0,0,.6)",
+          ...titleStyle,
+        }}
+      >
+        {title}
+      </Text>
+      <View
+        style={{
+          marginTop: Dimensions.get("window").height * 0.1,
+        }}
+      >
+        <RenderInput
+          value={code}
+          errors={errors}
+          error={errors?.code}
+          label={labelCode}
+          onChange={onChangeCode}
+          leftIcon={leftIconCode}
+          keyboardType={"number-pad"}
+        />
+        <RenderInput
+          value={email}
+          errors={errors}
+          error={errors?.email}
+          label={labelEmail}
+          onChange={onChange}
+          leftIcon={leftIconEmail}
+          textContentType={"username"}
+          autoCapitalize={"none"}
+          keyboardType={"email-address"}
+        />
+
+        <RenderInput
+          value={password}
+          errors={errors}
+          error={errors?.password}
+          label={labelPassword}
+          onChange={onChangePassword}
+          leftIcon={leftIconPassword}
+          textContentType={"password"}
+          rightIcon={
+            setShowPassword !== undefined &&
+            (!showPassword ? (
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Icon name="eye" size={24} color={colorIconPassword} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Icon
+                  name="eye-with-line"
+                  size={24}
+                  color={colorIconPassword}
+                />
+              </TouchableOpacity>
+            ))
+          }
+          secureTextEntry={!showPassword}
+        />
+
+        <RenderInput
+          value={confrimPassword}
+          errors={errors}
+          error={errors?.confrimPassword}
+          label={labelConfrimPassword}
+          onChange={onChangeConfrimPassword}
+          leftIcon={leftIconPassword}
+          textContentType={"password"}
+          rightIcon={
+            setShowPassword !== undefined &&
+            (!showPassword ? (
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Icon name="eye" size={24} color={colorIconPassword} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Icon
+                  name="eye-with-line"
+                  size={24}
+                  color={colorIconPassword}
+                />
+              </TouchableOpacity>
+            ))
+          }
+          secureTextEntry={!showPassword}
+        />
+        <RenderButton
+          title={textConnexion}
+          Schema={Schema}
+          startLoad={() => setLoading(true)}
+          endLoad={() => setLoading(false)}
+          setErrors={(error) => setErrors(error)}
+          email={email}
+          password={password}
+          submit={submit}
+          styles={{ backgroundColor: "red" }}
+          titleStyle={connexionTitleStyle}
+          buttonStyle={connexionButtonStyle}
+        />
+      </View>
+    </View>
+  );
+}
