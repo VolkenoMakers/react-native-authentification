@@ -69,7 +69,7 @@ export default function App() {
 }
 ```
 
-<p float="left">
+<p float="center">
 <img src="./assets/images/image.png" width="300"/>
 </p>
 
@@ -179,7 +179,7 @@ export default function App() {
 }
 ```
 
-<p float="left">
+<p float="center">
 <img src="./assets/images/image2.png" width="300"/>
 </p>
 
