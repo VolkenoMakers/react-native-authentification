@@ -96,7 +96,7 @@ the variables errors and setErrors are mandatory. They allow you to display erro
 | setPassword     | function |  void   | Used to enter and modify the password variable when typed.                      |
 | errors          |  object  |  void   | Object used to store email and password validation errors                       |
 | setErrors       | function |  void   | They allow you to display errors when validating the email and password         |
-| OnSubmit        | function |  void   | Fonction qui réagit lorsque le bouton de connexion est cliqué.                  |
+| OnSubmit        | function |  void   | Function that reacts when the connect button is clicked.                        |
 
 **Other props**
 | Property | Type | Default | Description |
@@ -237,7 +237,9 @@ export default function App() {
 }
 ```
 
-![plot](./assets/images/register.png)
+<p float="center">
+<img src="./assets/images/register.png" width="300"/>
+</p>
 
 Here we have a function which reacts when the connect button is clicked.
 showPassword and setShowPassword allows you to activate or deactivate the visibility of the password.
@@ -264,4 +266,47 @@ the variables errors and setErrors are mandatory. They allow you to display erro
 | setPassword_confirmation | function |  void   | Used to enter and modify the Password Confirmation variable when typed.         |
 | errors                   |  object  |  void   | Object used to store email and password validation errors                       |
 | setErrors                | function |  void   | They allow you to display errors when validating the email and password         |
-| OnSubmit                 | function |  void   | Fonction qui réagit lorsque le bouton de connexion est cliqué.                  |
+| OnSubmit                 | function |  void   | Function that reacts when the connect button is clicked.                        |
+
+**Other props**
+| Property | Type | Default | Description |
+| --------------- | :------: | :-----: | -------------------- |
+| title | string | "Connexion" | change connection text |
+| colorIconPassword | color | "#2FCA74" | eye color |
+| textButtonRegister | string | "S'inscrire" | change text on register button |
+| leftIconPassword | function | void | put a key icon 🔑 for the password |
+| leftIconEmail | function | void | put a mail icon 📧 for the email address |
+| leftIconFirstName | function | void | put an icon at firstName |
+| leftIconLastName | function | void | put an icon at lastName |
+| leftIconAdresse | function | void | put an icon at adresse |
+| leftIconPhone | function | void | put a phone icon 📞 for phone |
+| textRedirectLogin | string | "Je suis déjà inscrit" | Allow to put a text which will make it possible to make a redirection towards the page of connection |
+| pressRedirectLogin | function | void | handle textRedirectLogin button is pressed |
+| first_name | string | false | enter first_name if it exists |
+| last_name | string | false | enter last_name if it exists|
+| phone | string | false | enter phone if it exists|
+| adresse | string | false | enter adresse if it exists|
+| setFirstName | function | void | Called for allows you to enter and modify the first_name variable when typing it |
+| setLastName | function | void | Called for allows you to enter and modify the last_name variable when typing it |
+| setPhone | function | void | Called for allows you to enter and modify the phone variable when typing it |
+| setAdresse | function | void | Called for allows you to enter and modify the adresse variable when typing it |
+| labelEmail | string | false | Change the Email label|
+| labelPassword | string | false | Change the password label |
+| labelPassword_confirmation | string | false | Change the Password Confirmation label |
+| labelFirstName | string | false | Change the first_name label if first_name exists|
+| labelLastName | string | false | Change the last_name label if last_name exists|
+| labelPhone | string | false | Change the phone label if phone exists|
+| labelAdresse | string | false | Change the adresse label if adresse exists|
+
+**Styles props**
+| Property | Type | Default | Description |
+| --------------- | :------: | :-----: | -------------------- |
+| styles | style | {flex: 1, paddingHorizontal: 20} | modify or replace the default style of the entire page |
+| textRedirectLoginStyle | style | { color: "#2FCA74",textAlign: "center",fontSize: 14 } | change or override the default styling for textRedirectLogin |
+| connexionButtonStyle | style | {backgroundColor: "#2FCA74",height: 50,minWidth: "100%",paddingHorizontal: 25} | modify or replace the default style of the connexion button |
+| connexionTitleStyle | style | {color: "white",fontWeight: "bold",letterSpacing: 1,ontSize: 14} | change or override the default styling for login text |
+| titleStyle | style | {marginVertical: 30,fontWeight: "bold",color: "#454545",fontSize: 36,textAlign: "center", | change or override the default styling for connexion text |
+
+<p float="center">
+<img src="./assets/images/register2.png" width="300"/>
+</p>

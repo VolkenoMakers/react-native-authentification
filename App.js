@@ -30,7 +30,10 @@ export default function App() {
         setPassword_confirmation={setPassword_confirmation}
         errors={errors}
         setErrors={setErrors}
-        textRedirectLogin="Je n'ai pas encore de compte"
+        first_name
+        last_name
+        adresse
+        phone
       />
     </View>
   );

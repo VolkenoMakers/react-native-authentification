@@ -44,7 +44,7 @@ export function Register({
   labelPassword_confirmation = "Confirmer mot de passe",
   titleStyle = {},
   colorIconPassword = Colors.bgApp,
-  textConnexion = "S'inscrire",
+  textButtonRegister = "S'inscrire",
   connexionTitleStyle = {},
   connexionButtonStyle = {},
   leftIconPassword = {},
@@ -53,7 +53,7 @@ export function Register({
   leftIconLastName = {},
   leftIconAdresse = {},
   leftIconPhone = {},
-  textRedirectLogin,
+  textRedirectLogin = "Je suis déjà inscrit",
   textRedirectLoginStyle = {},
   styles = {},
   OnSubmit,
@@ -395,7 +395,7 @@ export function Register({
           )}
 
           <RenderButton
-            title={textConnexion}
+            title={textButtonRegister}
             Schema={Schema}
             startLoad={() => setLoading(true)}
             endLoad={() => setLoading(false)}
@@ -459,7 +459,7 @@ export function Login({
   connexionButtonStyle = {},
   leftIconPassword = {},
   leftIconEmail = {},
-  textRedirectRegister,
+  textRedirectRegister = "Je n'ai pas encore de compte",
   textRedirectRegisterStyle = {},
   styles = {},
   OnSubmit,
