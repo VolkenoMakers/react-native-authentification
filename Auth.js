@@ -16,6 +16,8 @@ import * as Facebook from "expo-facebook";
 import globalStyles from "./constants/globalStyles";
 import * as Google from "expo-google-app-auth";
 
+///////////////////////////////////---------------------- R E G I S T E R ------------------////////////////////////////
+
 export function Register({
   setErrors,
   errors,
@@ -61,6 +63,7 @@ export function Register({
   OnSubmit,
   pressRedirectLogin,
   registerSocial,
+  google = false,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -116,7 +119,6 @@ export function Register({
   let onChangePassword_confirmation = (text) => {
     setPassword_confirmation(text);
   };
-
   const loginFacebook = async () => {
     try {
       await Facebook.initializeAsync({
@@ -139,7 +141,6 @@ export function Register({
           picture: userInfo?.picture?.data.url,
           username: userInfo?.short_name,
         };
-        console.log("userInfo", userInfo);
 
         registerSocial(userData);
       } else {
@@ -153,10 +154,10 @@ export function Register({
   const loginGoogle = async () => {
     try {
       const result = await Google.logInAsync({
-        androidClientId:
-          "202172570263-s8heklurs23e1ep4h2dnhjderbhpqhck.apps.googleusercontent.com",
-        iosClientId:
-          "202172570263-69mqs4urp5sg7jh3af8jut6u9rohc25c.apps.googleusercontent.com",
+        iosClientId: `419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
+        androidClientId: `419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
+        iosStandaloneAppClientId: `419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
+        androidStandaloneAppClientId: `419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
         scopes: ["profile", "email"],
       });
 
@@ -167,7 +168,6 @@ export function Register({
           last_name: result.user.familyName,
           picture: result.user.photoUrl,
         };
-        console.log("sucess googgle login", result);
         registerSocial(userData);
         return result.accessToken;
       } else {
@@ -320,7 +320,7 @@ export function Register({
             secureTextEntry={!showPassword}
           />
 
-          {facebook !== false && (
+          {(facebook !== false || google !== false) && (
             <View
               style={{
                 flexDirection: "row",
@@ -330,77 +330,81 @@ export function Register({
                 marginBottom: 30,
               }}
             >
-              <TouchableOpacity
-                style={{
-                  borderColor: "rgba(0, 0, 0, 0.1)",
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingHorizontal: 20,
-                  paddingVertical: 8,
-                  ...globalStyles.buttonShadow,
-                  backgroundColor: "#fff",
-                }}
-                onPress={() => {
-                  loginFacebook();
-                }}
-              >
-                <IonIcon
-                  name="logo-facebook"
-                  size={17}
-                  color={Colors.facebook}
-                />
-                <Text
+              {facebook !== false && (
+                <TouchableOpacity
                   style={{
-                    color: "rgba(0, 0, 0, 0.5)",
-                    fontSize: 14,
-                    fontWeight: "bold",
-                    paddingLeft: 10,
+                    borderColor: "rgba(0, 0, 0, 0.1)",
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    paddingHorizontal: 20,
+                    paddingVertical: 8,
+                    ...globalStyles.buttonShadow,
+                    backgroundColor: "#fff",
+                  }}
+                  onPress={() => {
+                    loginFacebook();
                   }}
                 >
-                  Facebook
-                </Text>
-              </TouchableOpacity>
+                  <IonIcon
+                    name="logo-facebook"
+                    size={17}
+                    color={Colors.facebook}
+                  />
+                  <Text
+                    style={{
+                      color: "rgba(0, 0, 0, 0.5)",
+                      fontSize: 14,
+                      fontWeight: "bold",
+                      paddingLeft: 10,
+                    }}
+                  >
+                    Facebook
+                  </Text>
+                </TouchableOpacity>
+              )}
 
-              <TouchableOpacity
-                style={{
-                  borderColor: "rgba(0, 0, 0, 0.1)",
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingHorizontal: 20,
-                  paddingVertical: 8,
-                  ...globalStyles.buttonShadow,
-                  backgroundColor: "#fff",
-                }}
-                onPress={() => {
-                  loginGoogle();
-                }}
-              >
-                <Image
-                  source={require("./assets/icons/google.png")}
+              {google !== false && (
+                <TouchableOpacity
                   style={{
-                    alignSelf: "center",
-                    height: 18,
-                    width: 18,
+                    borderColor: "rgba(0, 0, 0, 0.1)",
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    paddingHorizontal: 20,
+                    paddingVertical: 8,
+                    ...globalStyles.buttonShadow,
+                    backgroundColor: "#fff",
                   }}
-                  resizeMode="contain"
-                />
-                <Text
-                  style={{
-                    color: "rgba(0, 0, 0, 0.5)",
-                    fontSize: 14,
-                    fontWeight: "bold",
-                    paddingLeft: 10,
+                  onPress={() => {
+                    loginGoogle();
                   }}
                 >
-                  Google
-                </Text>
-              </TouchableOpacity>
+                  <Image
+                    source={require("./assets/icons/google.png")}
+                    style={{
+                      alignSelf: "center",
+                      height: 18,
+                      width: 18,
+                    }}
+                    resizeMode="contain"
+                  />
+                  <Text
+                    style={{
+                      color: "rgba(0, 0, 0, 0.5)",
+                      fontSize: 14,
+                      fontWeight: "bold",
+                      paddingLeft: 10,
+                    }}
+                  >
+                    Google
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
 
@@ -448,6 +452,8 @@ export function Register({
   );
 }
 
+///////////////////////////////////---------------------- L O G I N ------------------////////////////////////////
+
 export function Login({
   setErrors,
   errors,
@@ -475,6 +481,9 @@ export function Login({
   OnSubmit,
   pressForgotPassword,
   pressRedirectRegister,
+  facebook,
+  google,
+  registerSocial,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -490,6 +499,65 @@ export function Login({
   };
   let onChangePassword = (text) => {
     setPassword(text);
+  };
+  const loginFacebook = async () => {
+    try {
+      await Facebook.initializeAsync({
+        appId: "796915091156923",
+      });
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ["public_profile", "email"],
+      });
+      if (type === "success") {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?fields=id,last_name,email,short_name,first_name,picture&access_token=${token}`
+        );
+        const userInfo = await response.json();
+
+        const userData = {
+          first_name: userInfo.first_name,
+          last_name: userInfo.last_name,
+          email: userInfo.email,
+          picture: userInfo?.picture?.data.url,
+          username: userInfo?.short_name,
+        };
+
+        registerSocial(userData);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
+
+  const loginGoogle = async () => {
+    try {
+      const result = await Google.logInAsync({
+        iosClientId: `419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
+        androidClientId: `419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
+        iosStandaloneAppClientId: `419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
+        androidStandaloneAppClientId: `419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
+        scopes: ["profile", "email"],
+      });
+
+      if (result.type === "success") {
+        const userData = {
+          email: result.user.email,
+          first_name: result.user.givenName,
+          last_name: result.user.familyName,
+          picture: result.user.photoUrl,
+        };
+        registerSocial(userData);
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      console.log("e login google erreur", e);
+      return { error: true };
+    }
   };
   return (
     <View style={{ flex: 1, paddingHorizontal: 20, ...styles }}>
@@ -555,6 +623,93 @@ export function Login({
           }
           secureTextEntry={!showPassword}
         />
+        {(facebook !== false || google !== false) && (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingHorizontal: 10,
+              marginBottom: 30,
+            }}
+          >
+            {facebook !== false && (
+              <TouchableOpacity
+                style={{
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 20,
+                  paddingVertical: 8,
+                  ...globalStyles.buttonShadow,
+                  backgroundColor: "#fff",
+                }}
+                onPress={() => {
+                  loginFacebook();
+                }}
+              >
+                <IonIcon
+                  name="logo-facebook"
+                  size={17}
+                  color={Colors.facebook}
+                />
+                <Text
+                  style={{
+                    color: "rgba(0, 0, 0, 0.5)",
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    paddingLeft: 10,
+                  }}
+                >
+                  Facebook
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {google !== false && (
+              <TouchableOpacity
+                style={{
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 20,
+                  paddingVertical: 8,
+                  ...globalStyles.buttonShadow,
+                  backgroundColor: "#fff",
+                }}
+                onPress={() => {
+                  loginGoogle();
+                }}
+              >
+                <Image
+                  source={require("./assets/icons/google.png")}
+                  style={{
+                    alignSelf: "center",
+                    height: 18,
+                    width: 18,
+                  }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    color: "rgba(0, 0, 0, 0.5)",
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    paddingLeft: 10,
+                  }}
+                >
+                  Google
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
       </View>
       <View
         style={{
