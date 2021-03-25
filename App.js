@@ -16,6 +16,11 @@ export default function App() {
     Alert.alert("Félicitation", "Connexion réussie");
   };
 
+  const registerSocial = async (data) => {
+    console.log("registerSocial", data);
+    Alert.alert("Félicitation", "Connexion réussie");
+  };
+
   return (
     <View style={styles.container}>
       <Register
@@ -30,10 +35,8 @@ export default function App() {
         setPassword_confirmation={setPassword_confirmation}
         errors={errors}
         setErrors={setErrors}
-        first_name
-        last_name
-        adresse
-        phone
+        registerSocial={registerSocial}
+        facebook
       />
     </View>
   );

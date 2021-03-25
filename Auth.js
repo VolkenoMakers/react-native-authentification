@@ -13,6 +13,8 @@ import { RenderButton, RenderInput } from "./shared/renderInput";
 import Icon from "react-native-vector-icons/Entypo";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import * as Facebook from "expo-facebook";
+import globalStyles from "./constants/globalStyles";
+import * as Google from "expo-google-app-auth";
 
 export function Register({
   setErrors,
@@ -58,6 +60,7 @@ export function Register({
   styles = {},
   OnSubmit,
   pressRedirectLogin,
+  registerSocial,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -125,49 +128,54 @@ export function Register({
       if (type === "success") {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(
-          `https://graph.facebook.com/me?fields=id,last_name,email,birthday,first_name,picture&access_token=${token}`
+          `https://graph.facebook.com/me?fields=id,last_name,email,short_name,first_name,picture&access_token=${token}`
         );
         const userInfo = await response.json();
 
         const userData = {
           first_name: userInfo.first_name,
           last_name: userInfo.last_name,
-          phone: "",
-          adress: userInfo.address || "",
           email: userInfo.email,
+          picture: userInfo?.picture?.data.url,
+          username: userInfo?.short_name,
         };
-        console.log("data", userData);
-        /* try {
-          const data = await registersocial(userData);
-          console.log("data", data);
-          const { user_id } = jwtDecode(data.token);
-          console.log(" login user_id", user_id);
-          await loginStorage({}, data.token);
-          const user = await read_user(user_id);
+        console.log("userInfo", userInfo);
 
-          this.props.onLogin({ user, token: data.token });
-          await loginStorage(user, data.token);
-          this.setState({ errorMessage: "" });
-
-          this.setState({ isModalVisible: true });
-        } catch (ex) {
-          console.log("error response", ex.response);
-          const { error } = ex;
-          if (error) {
-            const errors = {};
-            Object.keys(error).map((field) => {
-              const err = error[field];
-              errors[field] = err[0];
-            });
-            this.setState({ errors });
-          }
-          console.log("error s", ex);
-        } */
+        registerSocial(userData);
       } else {
         // type === 'cancel'
       }
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
+    }
+  };
+
+  const loginGoogle = async () => {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId:
+          "202172570263-s8heklurs23e1ep4h2dnhjderbhpqhck.apps.googleusercontent.com",
+        iosClientId:
+          "202172570263-69mqs4urp5sg7jh3af8jut6u9rohc25c.apps.googleusercontent.com",
+        scopes: ["profile", "email"],
+      });
+
+      if (result.type === "success") {
+        const userData = {
+          email: result.user.email,
+          first_name: result.user.givenName,
+          last_name: result.user.familyName,
+          picture: result.user.photoUrl,
+        };
+        console.log("sucess googgle login", result);
+        registerSocial(userData);
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      console.log("e login google erreur", e);
+      return { error: true };
     }
   };
   return (
@@ -332,6 +340,8 @@ export function Register({
                   justifyContent: "space-between",
                   paddingHorizontal: 20,
                   paddingVertical: 8,
+                  ...globalStyles.buttonShadow,
+                  backgroundColor: "#fff",
                 }}
                 onPress={() => {
                   loginFacebook();
@@ -347,7 +357,6 @@ export function Register({
                     color: "rgba(0, 0, 0, 0.5)",
                     fontSize: 14,
                     fontWeight: "bold",
-                    fontFamily: "Montserrat-Bold",
                     paddingLeft: 10,
                   }}
                 >
@@ -365,9 +374,11 @@ export function Register({
                   justifyContent: "space-between",
                   paddingHorizontal: 20,
                   paddingVertical: 8,
+                  ...globalStyles.buttonShadow,
+                  backgroundColor: "#fff",
                 }}
                 onPress={() => {
-                  this.loginGoogle();
+                  loginGoogle();
                 }}
               >
                 <Image
@@ -384,7 +395,6 @@ export function Register({
                     color: "rgba(0, 0, 0, 0.5)",
                     fontSize: 14,
                     fontWeight: "bold",
-                    fontFamily: "Montserrat-Bold",
                     paddingLeft: 10,
                   }}
                 >
