@@ -179,6 +179,10 @@ export default function App() {
 
 ![alt text](./assets/images/image2.png)
 
+<p float="left">
+<img src="https://raw.githubusercontent.com/oijusti/react-native-firebaseui-auth/HEAD/firebaseui-android.png" width="150"/>
+<img src="https://raw.githubusercontent.com/oijusti/react-native-firebaseui-auth/HEAD/firebaseui-ios.png" width="150"/>
+</p>
 # Register
 
 ## Peer Dependencies
