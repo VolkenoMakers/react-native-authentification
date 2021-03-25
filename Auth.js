@@ -16,8 +16,11 @@ import * as Facebook from "expo-facebook";
 import globalStyles from "./constants/globalStyles";
 import * as Google from "expo-google-app-auth";
 
-///////////////////////////////////---------------------- R E G I S T E R ------------------////////////////////////////
-
+/* 
+///////////////////////////////////
+---------------------- R E G I S T E R ------------------
+////////////////////////////
+ */
 export function Register({
   setErrors,
   errors,
@@ -64,6 +67,11 @@ export function Register({
   pressRedirectLogin,
   registerSocial,
   google = false,
+  iosClientId,
+  androidClientId,
+  iosStandaloneAppClientId,
+  androidStandaloneAppClientId,
+  facebookAppId,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -122,7 +130,7 @@ export function Register({
   const loginFacebook = async () => {
     try {
       await Facebook.initializeAsync({
-        appId: "796915091156923",
+        appId: facebookAppId, //"796915091156923",
       });
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ["public_profile", "email"],
@@ -154,10 +162,10 @@ export function Register({
   const loginGoogle = async () => {
     try {
       const result = await Google.logInAsync({
-        iosClientId: `419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
-        androidClientId: `419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
-        iosStandaloneAppClientId: `419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
-        androidStandaloneAppClientId: `419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
+        iosClientId: iosClientId, //`419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
+        androidClientId: androidClientId, //`419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
+        iosStandaloneAppClientId: iosStandaloneAppClientId, //`419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
+        androidStandaloneAppClientId: androidStandaloneAppClientId, // `419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
         scopes: ["profile", "email"],
       });
 
@@ -452,7 +460,11 @@ export function Register({
   );
 }
 
-///////////////////////////////////---------------------- L O G I N ------------------////////////////////////////
+/* 
+///////////////////////////////////
+---------------------- L O G I N ------------------
+//////////////////////////////////
+ */
 
 export function Login({
   setErrors,
@@ -481,9 +493,14 @@ export function Login({
   OnSubmit,
   pressForgotPassword,
   pressRedirectRegister,
-  facebook,
-  google,
+  facebook = false,
+  google = false,
   registerSocial,
+  iosClientId,
+  androidClientId,
+  iosStandaloneAppClientId,
+  androidStandaloneAppClientId,
+  facebookAppId,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -503,7 +520,7 @@ export function Login({
   const loginFacebook = async () => {
     try {
       await Facebook.initializeAsync({
-        appId: "796915091156923",
+        appId: facebookAppId, //"796915091156923",
       });
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ["public_profile", "email"],
@@ -535,10 +552,10 @@ export function Login({
   const loginGoogle = async () => {
     try {
       const result = await Google.logInAsync({
-        iosClientId: `419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
-        androidClientId: `419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
-        iosStandaloneAppClientId: `419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
-        androidStandaloneAppClientId: `419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
+        iosClientId: iosClientId, //`419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
+        androidClientId: androidClientId, // `419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
+        iosStandaloneAppClientId: iosStandaloneAppClientId, //`419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
+        androidStandaloneAppClientId: androidStandaloneAppClientId, //`419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
         scopes: ["profile", "email"],
       });
 
@@ -563,7 +580,6 @@ export function Login({
     <View style={{ flex: 1, paddingHorizontal: 20, ...styles }}>
       <View
         style={{
-          flex: 1,
           marginTop: Dimensions.get("window").height * 0.1,
         }}
       >
@@ -580,11 +596,7 @@ export function Login({
           {title}
         </Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
+      <View style={{}}>
         <RenderInput
           value={email}
           errors={errors}
@@ -713,8 +725,7 @@ export function Login({
       </View>
       <View
         style={{
-          marginTop: 10,
-          flex: 1,
+          marginTop: 0,
         }}
       >
         <TouchableOpacity
@@ -730,7 +741,7 @@ export function Login({
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 1 }}>
+      <View style={{}}>
         <RenderButton
           title={textConnexion}
           Schema={Schema}
@@ -748,7 +759,7 @@ export function Login({
       <TouchableOpacity
         style={{
           alignSelf: "flex-end",
-          flex: 1,
+          marginTop: 20,
         }}
         onPress={pressRedirectRegister}
       >

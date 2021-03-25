@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Login
+      <Register
         OnSubmit={submit}
         setShowPassword={setShowPassword}
         showPassword={showPassword}
@@ -36,7 +36,6 @@ export default function App() {
         errors={errors}
         setErrors={setErrors}
         registerSocial={registerSocial}
-        google
         facebook
       />
     </View>
