@@ -39,4 +39,5 @@ export default {
   cadre: "#F39200",
   white: "#FFFFFF",
   transparent: "rgba(255, 255, 255, .2)",
+  facebook: "#395185",
 };

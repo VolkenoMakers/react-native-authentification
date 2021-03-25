@@ -78,7 +78,6 @@ export function RenderButton({
   titleStyle = {},
   buttonStyle = {},
 }) {
-  console.log("value", value);
   return (
     <APpButton
       title={title}

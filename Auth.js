@@ -5,11 +5,14 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from "react-native";
 import Yup from "./shared/validator";
 import Colors from "./constants/Colors";
 import { RenderButton, RenderInput } from "./shared/renderInput";
 import Icon from "react-native-vector-icons/Entypo";
+import IonIcon from "react-native-vector-icons/Ionicons";
+import * as Facebook from "expo-facebook";
 
 export function Register({
   setErrors,
@@ -25,6 +28,7 @@ export function Register({
   last_name = false,
   phone = false,
   adresse = false,
+  facebook = false,
   setPhone,
   setLastName,
   setAdresse,
@@ -69,7 +73,6 @@ export function Register({
         "passwords-match",
         "Confirmer mot de passe doit correspondre Mot De Passe",
         function (value) {
-          console.log("value", value);
           return this.parent.password === value;
         }
       ),
@@ -109,6 +112,63 @@ export function Register({
 
   let onChangePassword_confirmation = (text) => {
     setPassword_confirmation(text);
+  };
+
+  const loginFacebook = async () => {
+    try {
+      await Facebook.initializeAsync({
+        appId: "796915091156923",
+      });
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ["public_profile", "email"],
+      });
+      if (type === "success") {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?fields=id,last_name,email,birthday,first_name,picture&access_token=${token}`
+        );
+        const userInfo = await response.json();
+
+        const userData = {
+          first_name: userInfo.first_name,
+          last_name: userInfo.last_name,
+          phone: "",
+          adress: userInfo.address || "",
+          email: userInfo.email,
+        };
+        console.log("data", userData);
+        /* try {
+          const data = await registersocial(userData);
+          console.log("data", data);
+          const { user_id } = jwtDecode(data.token);
+          console.log(" login user_id", user_id);
+          await loginStorage({}, data.token);
+          const user = await read_user(user_id);
+
+          this.props.onLogin({ user, token: data.token });
+          await loginStorage(user, data.token);
+          this.setState({ errorMessage: "" });
+
+          this.setState({ isModalVisible: true });
+        } catch (ex) {
+          console.log("error response", ex.response);
+          const { error } = ex;
+          if (error) {
+            const errors = {};
+            Object.keys(error).map((field) => {
+              const err = error[field];
+              errors[field] = err[0];
+            });
+            this.setState({ errors });
+          }
+          console.log("error s", ex);
+        } */
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
   };
   return (
     <View style={{ flex: 1, paddingHorizontal: 20, ...styles }}>
@@ -251,6 +311,89 @@ export function Register({
             }
             secureTextEntry={!showPassword}
           />
+
+          {facebook !== false && (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingHorizontal: 10,
+                marginBottom: 30,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 20,
+                  paddingVertical: 8,
+                }}
+                onPress={() => {
+                  loginFacebook();
+                }}
+              >
+                <IonIcon
+                  name="logo-facebook"
+                  size={17}
+                  color={Colors.facebook}
+                />
+                <Text
+                  style={{
+                    color: "rgba(0, 0, 0, 0.5)",
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    fontFamily: "Montserrat-Bold",
+                    paddingLeft: 10,
+                  }}
+                >
+                  Facebook
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 20,
+                  paddingVertical: 8,
+                }}
+                onPress={() => {
+                  this.loginGoogle();
+                }}
+              >
+                <Image
+                  source={require("./assets/icons/google.png")}
+                  style={{
+                    alignSelf: "center",
+                    height: 18,
+                    width: 18,
+                  }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    color: "rgba(0, 0, 0, 0.5)",
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    fontFamily: "Montserrat-Bold",
+                    paddingLeft: 10,
+                  }}
+                >
+                  Google
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           <RenderButton
             title={textConnexion}
             Schema={Schema}
@@ -596,7 +739,6 @@ export function ResetPassword({
         "passwords-match",
         "Confirmer mot de passe doit correspondre Mot De Passe",
         function (value) {
-          console.log("value", value);
           return this.parent.password === value;
         }
       ),
@@ -605,7 +747,6 @@ export function ResetPassword({
     OnSubmit();
   };
 
-  console.log("confrimPassword", confrimPassword);
   const [loading, setLoading] = React.useState(false);
 
   let onChange = (text) => {
@@ -626,6 +767,7 @@ export function ResetPassword({
   let value = {
     email,
   };
+
   return (
     <View
       style={{
@@ -723,6 +865,7 @@ export function ResetPassword({
           }
           secureTextEntry={!showPassword}
         />
+
         <RenderButton
           title={textConnexion}
           Schema={Schema}

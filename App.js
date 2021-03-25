@@ -8,7 +8,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 export default function App() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  const [code, setCode] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [password_confirmation, setPassword_confirmation] = React.useState("");
   const [errors, setErrors] = React.useState({});
@@ -24,18 +23,14 @@ export default function App() {
         setShowPassword={setShowPassword}
         showPassword={showPassword}
         email={email}
-        code={code}
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
         password_confirmation={password_confirmation}
         setPassword_confirmation={setPassword_confirmation}
-        setCode={setCode}
         errors={errors}
         setErrors={setErrors}
-        textRedirectLoginStyle={{ color: "red" }}
         textRedirectLogin="Je n'ai pas encore de compte"
-        styles={{}}
       />
     </View>
   );
