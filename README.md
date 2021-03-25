@@ -69,7 +69,9 @@ export default function App() {
 }
 ```
 
-![plot](./assets/images/image.png)
+<p float="left">
+<img src="./assets/images/image.png" width="150"/>width="150"/>
+</p>
 
 Here we have a function which reacts when the connect button is clicked.
 showPassword and setShowPassword allows you to activate or deactivate the visibility of the password.
@@ -177,12 +179,10 @@ export default function App() {
 }
 ```
 
-![alt text](./assets/images/image2.png)
-
 <p float="left">
-<img src="./assets/images/image2.png" width="150"/>
-<img src="https://raw.githubusercontent.com/oijusti/react-native-firebaseui-auth/HEAD/firebaseui-ios.png" width="150"/>
+<img src="./assets/images/image2.png" width="150"/>width="150"/>
 </p>
+
 # Register
 
 ## Peer Dependencies
