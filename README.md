@@ -70,7 +70,7 @@ export default function App() {
 ```
 
 <p float="left">
-<img src="./assets/images/image.png" width="150"/>width="150"/>
+<img src="./assets/images/image.png" width="300"/>
 </p>
 
 Here we have a function which reacts when the connect button is clicked.
@@ -180,7 +180,7 @@ export default function App() {
 ```
 
 <p float="left">
-<img src="./assets/images/image2.png" width="150"/>width="150"/>
+<img src="./assets/images/image2.png" width="300"/>
 </p>
 
 # Register
