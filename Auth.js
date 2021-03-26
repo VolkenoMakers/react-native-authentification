@@ -895,7 +895,7 @@ export function ResetPassword({
   labelConfrimPassword = "Confirmer Nouveau Mot de Passe",
   titleStyle = {},
   colorIconPassword = Colors.bgApp,
-  textConnexion = "Valider",
+  textValidate = "Valider",
   connexionTitleStyle = {},
   connexionButtonStyle = {},
   leftIconPassword = {},
@@ -1043,7 +1043,7 @@ export function ResetPassword({
         />
 
         <RenderButton
-          title={textConnexion}
+          title={textValidate}
           Schema={Schema}
           startLoad={() => setLoading(true)}
           endLoad={() => setLoading(false)}

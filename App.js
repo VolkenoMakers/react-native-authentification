@@ -6,6 +6,9 @@ import { Alert } from "react-native";
 
 export default function App() {
   const [email, setEmail] = React.useState("");
+  const [code, setCode] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confrimPassword, setConfrimPassword] = React.useState("");
   const [errors, setErrors] = React.useState({});
 
   const submit = async () => {
@@ -18,6 +21,12 @@ export default function App() {
         OnSubmit={submit}
         email={email}
         setEmail={setEmail}
+        code={code}
+        setCode={setCode}
+        password={password}
+        setPassword={setPassword}
+        confrimPassword={confrimPassword}
+        setConfrimPassword={setConfrimPassword}
         errors={errors}
         setErrors={setErrors}
       />

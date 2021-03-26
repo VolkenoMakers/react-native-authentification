@@ -287,34 +287,34 @@ the variables errors and setErrors are mandatory. They allow you to display erro
 
 **Other props**
 
-| Property                   |   Type   |        Default         | Description                                                                                          |
-| -------------------------- | :------: | :--------------------: | ---------------------------------------------------------------------------------------------------- |
-| title                      |  string  |      "Connexion"       | change connection text                                                                               |
-| colorIconPassword          |  color   |       "#2FCA74"        | eye color                                                                                            |
-| textButtonRegister         |  string  |      "S'inscrire"      | change text on register button                                                                       |
-| leftIconPassword           | function |          void          | put a key icon 🔑 for the password                                                                   |
-| leftIconEmail              | function |          void          | put a mail icon 📧 for the email address                                                             |
-| leftIconFirstName          | function |          void          | put an icon at firstName                                                                             |
-| leftIconLastName           | function |          void          | put an icon at lastName                                                                              |
-| leftIconAdresse            | function |          void          | put an icon at adresse                                                                               |
-| leftIconPhone              | function |          void          | put a phone icon 📞 for phone                                                                        |
-| textRedirectLogin          |  string  | "Je suis déjà inscrit" | Allow to put a text which will make it possible to make a redirection towards the page of connection |
-| pressRedirectLogin         | function |          void          | handle textRedirectLogin button is pressed                                                           |
-| first_name                 |  string  |         false          | enter first_name if it exists                                                                        |
-| last_name                  |  string  |         false          | enter last_name if it exists                                                                         |
-| phone                      |  string  |         false          | enter phone if it exists                                                                             |
-| adresse                    |  string  |         false          | enter adresse if it exists                                                                           |
-| setFirstName               | function |          void          | Called for allows you to enter and modify the first_name variable when typing it                     |
-| setLastName                | function |          void          | Called for allows you to enter and modify the last_name variable when typing it                      |
-| setPhone                   | function |          void          | Called for allows you to enter and modify the phone variable when typing it                          |
-| setAdresse                 | function |          void          | Called for allows you to enter and modify the adresse variable when typing it                        |
-| labelEmail                 |  string  |         false          | Change the Email label                                                                               |
-| labelPassword              |  string  |         false          | Change the password label                                                                            |
-| labelPassword_confirmation |  string  |         false          | Change the Password Confirmation label                                                               |
-| labelFirstName             |  string  |         false          | Change the first_name label if first_name exists                                                     |
-| labelLastName              |  string  |         false          | Change the last_name label if last_name exists                                                       |
-| labelPhone                 |  string  |         false          | Change the phone label if phone exists                                                               |
-| labelAdresse               |  string  |         false          | Change the adresse label if adresse exists                                                           |
+| Property                   |   Type   |         Default          | Description                                                                                          |
+| -------------------------- | :------: | :----------------------: | ---------------------------------------------------------------------------------------------------- |
+| title                      |  string  |       "Connexion"        | change connection text                                                                               |
+| colorIconPassword          |  color   |        "#2FCA74"         | eye color                                                                                            |
+| textButtonRegister         |  string  |       "S'inscrire"       | change text on register button                                                                       |
+| leftIconPassword           | function |           void           | put a key icon 🔑 for the password                                                                   |
+| leftIconEmail              | function |           void           | put a mail icon 📧 for the email address                                                             |
+| leftIconFirstName          | function |           void           | put an icon at firstName                                                                             |
+| leftIconLastName           | function |           void           | put an icon at lastName                                                                              |
+| leftIconAdresse            | function |           void           | put an icon at adresse                                                                               |
+| leftIconPhone              | function |           void           | put a phone icon 📞 for phone                                                                        |
+| textRedirectLogin          |  string  |  "Je suis déjà inscrit"  | Allow to put a text which will make it possible to make a redirection towards the page of connection |
+| pressRedirectLogin         | function |           void           | handle textRedirectLogin button is pressed                                                           |
+| first_name                 |  string  |          false           | enter first_name if it exists                                                                        |
+| last_name                  |  string  |          false           | enter last_name if it exists                                                                         |
+| phone                      |  string  |          false           | enter phone if it exists                                                                             |
+| adresse                    |  string  |          false           | enter adresse if it exists                                                                           |
+| setFirstName               | function |           void           | Called for allows you to enter and modify the first_name variable when typing it                     |
+| setLastName                | function |           void           | Called for allows you to enter and modify the last_name variable when typing it                      |
+| setPhone                   | function |           void           | Called for allows you to enter and modify the phone variable when typing it                          |
+| setAdresse                 | function |           void           | Called for allows you to enter and modify the adresse variable when typing it                        |
+| labelEmail                 |  string  |      "Adresse mail"      | Change the Email label                                                                               |
+| labelPassword              |  string  |      "Mot de Passe"      | Change the password label                                                                            |
+| labelPassword_confirmation |  string  | "Confirmer mot de passe" | Change the Password Confirmation label                                                               |
+| labelFirstName             |  string  |         "Prénom"         | Change the first_name label if first_name exists                                                     |
+| labelLastName              |  string  |          "Nom"           | Change the last_name label if last_name exists                                                       |
+| labelPhone                 |  string  |       "Téléphone"        | Change the phone label if phone exists                                                               |
+| labelAdresse               |  string  |        "Adresse"         | Change the adresse label if adresse exists                                                           |
 
 **Styles props**
 
@@ -409,7 +409,7 @@ export default function App() {
 | leftIconEmail      | function |                                          void                                           | put a mail icon 📧 for the email address                                                             |
 | textRedirectLogin  |  string  |                                 "Je suis déjà inscrit"                                  | Allow to put a text which will make it possible to make a redirection towards the page of connection |
 | pressRedirectLogin | function |                                          void                                           | handle textRedirectLogin button is pressed                                                           |
-| labelEmail         |  string  |                                          false                                          | Change the Email label                                                                               |
+| labelEmail         |  string  |                                     "Adresse mail"                                      | Change the Email label                                                                               |
 | textValidate       |  string  |                                        "Valider"                                        | change text on validate button                                                                       |
 
 **Styles props**
@@ -429,3 +429,99 @@ export default function App() {
 ### after that you can use ResetPassword
 
 # ResetPassword
+
+## Peer Dependencies
+
+##### IMPORTANT! You need install them.
+
+```json
+ "react": "^16.0.0-beta.5",
+ "react-native": "^0.49.1"
+```
+
+## Basic Usage
+
+**First step:** import the component:
+
+```javascript
+import { Login } from "Auth";
+```
+
+**Second step:** Use the login
+
+```jsx
+export default function App() {
+  const [email, setEmail] = React.useState("");
+  const [code, setCode] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confrimPassword, setConfrimPassword] = React.useState("");
+  const [errors, setErrors] = React.useState({});
+
+  const submit = async () => {
+    Alert.alert("Félicitation", "Connexion réussie");
+  };
+
+  return (
+    <View style={styles.container}>
+      <ResetPassword
+        OnSubmit={submit}
+        email={email}
+        setEmail={setEmail}
+        code={code}
+        setCode={setCode}
+        password={password}
+        setPassword={setPassword}
+        confrimPassword={confrimPassword}
+        setConfrimPassword={setConfrimPassword}
+        errors={errors}
+        setErrors={setErrors}
+      />
+    </View>
+  );
+}
+```
+
+<p float="center">
+<img src="./assets/images/resetPassword.png" width="300"/>
+</p>
+
+**Props require**
+
+| Property           |   Type   | Default | Description                                                                     |
+| ------------------ | :------: | :-----: | ------------------------------------------------------------------------------- |
+| showPassword       | boolean  |  false  | Activate to see the password                                                    |
+| setShowPassword    | function |  void   | Called for allows you to activate or deactivate the visibility of the password. |
+| email              |  string  |    -    | Enter email address                                                             |
+| setEmail           | function |  void   | Called for allows you to enter and modify the email variable when typing it.    |
+| code               |  string  |    -    | Enter the code you received                                                     |
+| setCode            | function |  void   | Called for allows you to enter and modify the code variable when typing it.     |
+| password           |  string  |    -    | Enter Password                                                                  |
+| setPassword        | function |  void   | Used to enter and modify the password variable when typed.                      |
+| confrimPassword    |  string  |    -    | Enter Password Confirmation                                                     |
+| setPassword        | function |  void   | Used to enter and modify the password variable when typed.                      |
+| setConfrimPassword | function |  void   | Used to enter and modify the password Confirmation variable when typed.         |
+| errors             |  object  |  void   | Object used to store email and password validation errors                       |
+| setErrors          | function |  void   | They allow you to display errors when validating the email and password         |
+| OnSubmit           | function |  void   | Function that reacts when the connect button is clicked.                        |
+
+**Other props**
+| Property | Type | Default | Description |
+| --------------- | :------: | :-----: | -------------------- |
+| title | string | "Veuillez entrer votre code puis modifier votre mot de passe" | change connection text |
+| colorIconPassword | color | "#2FCA74" | eye color |
+| textValidate | string | "Valider" | change text on validate button |
+| leftIconPassword | function | void | put a key icon 🔑 for the password |
+| leftIconEmail | function | void | put a mail icon 📧 for the email address |
+| leftIconCode | function | void | put a icon for the code |
+| labelCode | string | "Code" | Change the Code label |
+| labelEmail | string | "Adresse mail" | Change the Email label |
+| labelPassword | string | "Nouveau Mot de Passe" | Change the password label |
+| labelConfrimPassword | string | "Confirmer Nouveau Mot de Passe" | Change the Password Confirmation label |
+
+**Styles props**
+| Property | Type | Default | Description |
+| --------------- | :------: | :-----: | -------------------- |
+| styles | style | {flex: 1, paddingHorizontal: 20} | modify or replace the default style of the entire page |
+| connexionButtonStyle | style | {backgroundColor: "#2FCA74",height: 50,minWidth: "100%",paddingHorizontal: 25} | modify or replace the default style of the connexion button |
+| connexionTitleStyle | style | {color: "white",fontWeight: "bold",letterSpacing: 1,ontSize: 14} | change or override the default styling for login text |
+| titleStyle | style | {marginVertical: 30,fontWeight: "bold",color: "#454545",fontSize: 36,textAlign: "center", | change or override the default styling for connexion text |
