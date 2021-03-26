@@ -786,11 +786,11 @@ export function RequestPasswordReset({
   title = "Veuillez entrer votre email Nous vous enverrons un lien pour modifier le mot de passe",
   labelEmail = "Adresse mail",
   titleStyle = {},
-  textConnexion = "Valider",
+  textValidate = "Valider",
   connexionTitleStyle = {},
   connexionButtonStyle = {},
   leftIconEmail = {},
-  textRedirectLogin,
+  textRedirectLogin = "Je suis déjà inscrit",
   textRedirectLoginStyle = {},
   styles = {},
   OnSubmit,
@@ -841,7 +841,7 @@ export function RequestPasswordReset({
       </View>
       <View style={{ marginTop: Dimensions.get("window").height * 0.05 }}>
         <RenderButton
-          title={textConnexion}
+          title={textValidate}
           Schema={Schema}
           startLoad={() => setLoading(true)}
           endLoad={() => setLoading(false)}

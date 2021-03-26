@@ -185,16 +185,16 @@ export default function App() {
 
 **Social props**
 
-| Property                     |   Type   | Default | Description                                                          |
-| ---------------------------- | :------: | :-----: | -------------------------------------------------------------------- |
-| facebook                     | boolean  |  false  | Activate to see the facebook button                                  |
-| google                       | boolean  |  false  | Activate to see the google button                                    |
-| registerSocialSubmit         | function |  void   | Function that reacts when one of the social media buttons is clicked |
-| facebookAppId                |  string  |    -    | this is the AppId for Facebook                                       |
-| iosClientId                  |  string  |    -    | this is the iosClientId for Google. It is obligatory                 |
-| androidClientId              |  string  |    -    | this is the androidClientId for Google. It is obligatory             |
-| iosStandaloneAppClientId     |  string  |    -    | this is the iosStandaloneAppClientId for Google                      |
-| androidStandaloneAppClientId |  string  |    -    | this is the androidStandaloneAppClientId for Google                  |
+| Property                     |   Type   | Default | Description                                                           |
+| ---------------------------- | :------: | :-----: | --------------------------------------------------------------------- |
+| facebook                     | boolean  |  false  | Activate to see the facebook button                                   |
+| google                       | boolean  |  false  | Activate to see the google button                                     |
+| registerSocialSubmit         | function |  void   | Function that reacts when one of the social media buttons is clicked  |
+| facebookAppId                |  string  |    -    | this is the AppId for Facebook. It is obligatory                      |
+| iosClientId                  |  string  |    -    | this is the iosClientId for Google. It is obligatory                  |
+| androidClientId              |  string  |    -    | this is the androidClientId for Google. It is obligatory              |
+| iosStandaloneAppClientId     |  string  |    -    | this is the iosStandaloneAppClientId for Google. It is obligatory     |
+| androidStandaloneAppClientId |  string  |    -    | this is the androidStandaloneAppClientId for Google. It is obligatory |
 
 <p float="center">
 <img src="./assets/images/loginSocial.png" width="300"/>
@@ -332,17 +332,100 @@ the variables errors and setErrors are mandatory. They allow you to display erro
 
 **Social props**
 
-| Property                     |   Type   | Default | Description                                                          |
-| ---------------------------- | :------: | :-----: | -------------------------------------------------------------------- |
-| facebook                     | boolean  |  false  | Activate to see the facebook button                                  |
-| google                       | boolean  |  false  | Activate to see the google button                                    |
-| registerSocialSubmit         | function |  void   | Function that reacts when one of the social media buttons is clicked |
-| facebookAppId                |  string  |    -    | this is the AppId for Facebook                                       |
-| iosClientId                  |  string  |    -    | this is the iosClientId for Google                                   |
-| androidClientId              |  string  |    -    | this is the androidClientId for Google                               |
-| iosStandaloneAppClientId     |  string  |    -    | this is the iosStandaloneAppClientId for Google                      |
-| androidStandaloneAppClientId |  string  |    -    | this is the androidStandaloneAppClientId for Google                  |
+| Property                     |   Type   | Default | Description                                                           |
+| ---------------------------- | :------: | :-----: | --------------------------------------------------------------------- |
+| facebook                     | boolean  |  false  | Activate to see the facebook button                                   |
+| google                       | boolean  |  false  | Activate to see the google button                                     |
+| registerSocialSubmit         | function |  void   | Function that reacts when one of the social media buttons is clicked  |
+| facebookAppId                |  string  |    -    | this is the AppId for Facebook. It is obligatory                      |
+| iosClientId                  |  string  |    -    | this is the iosClientId for Google. It is obligatory                  |
+| androidClientId              |  string  |    -    | this is the androidClientId for Google. It is obligatory              |
+| iosStandaloneAppClientId     |  string  |    -    | this is the iosStandaloneAppClientId for Google. It is obligatory     |
+| androidStandaloneAppClientId |  string  |    -    | this is the androidStandaloneAppClientId for Google. It is obligatory |
 
 <p float="center">
 <img src="./assets/images/registerSocial.png" width="300"/>
 </p>
+
+# Forgot Password
+
+## Peer Dependencies
+
+##### IMPORTANT! You need install them.
+
+```json
+ "react": "^16.0.0-beta.5",
+ "react-native": "^0.49.1"
+```
+
+## Basic Usage
+
+**First step:** import the component:
+
+```javascript
+import { RequestPasswordReset } from "Auth";
+```
+
+**Second step:** Use the RequestPasswordReset
+
+```jsx
+export default function App() {
+  const [email, setEmail] = React.useState("");
+  const [errors, setErrors] = React.useState({});
+
+  const submit = async () => {
+    Alert.alert("Félicitation", "Connexion réussie");
+  };
+
+  return (
+    <View style={styles.container}>
+      <RequestPasswordReset
+        OnSubmit={submit}
+        email={email}
+        setEmail={setEmail}
+        errors={errors}
+        setErrors={setErrors}
+      />
+    </View>
+  );
+}
+```
+
+**Props require**
+
+| Property  |   Type   | Default | Description                                                                  |
+| --------- | :------: | :-----: | ---------------------------------------------------------------------------- |
+| email     |  string  |    -    | Enter email address                                                          |
+| setEmail  | function |  void   | Called for allows you to enter and modify the email variable when typing it. |
+| errors    |  object  |  void   | Object used to store email and password validation errors                    |
+| setErrors | function |  void   | They allow you to display errors when validating the email and password      |
+| OnSubmit  | function |  void   | Function that reacts when the registration button is clicked.                |
+
+**Other props**
+
+| Property           |   Type   |                                         Default                                         | Description                                                                                          |
+| ------------------ | :------: | :-------------------------------------------------------------------------------------: | ---------------------------------------------------------------------------------------------------- |
+| title              |  string  | "Veuillez entrer votre email Nous vous enverrons un lien pour modifier le mot de passe" | change connection text                                                                               |
+| leftIconEmail      | function |                                          void                                           | put a mail icon 📧 for the email address                                                             |
+| textRedirectLogin  |  string  |                                 "Je suis déjà inscrit"                                  | Allow to put a text which will make it possible to make a redirection towards the page of connection |
+| pressRedirectLogin | function |                                          void                                           | handle textRedirectLogin button is pressed                                                           |
+| labelEmail         |  string  |                                          false                                          | Change the Email label                                                                               |
+| textValidate       |  string  |                                        "Valider"                                        | change text on validate button                                                                       |
+
+**Styles props**
+
+| Property               | Type  |                                          Default                                          | Description                                                  |
+| ---------------------- | :---: | :---------------------------------------------------------------------------------------: | ------------------------------------------------------------ |
+| styles                 | style |                             {flex: 1, paddingHorizontal: 20}                              | modify or replace the default style of the entire page       |
+| textRedirectLoginStyle | style |                   { color: "#2FCA74",textAlign: "center",fontSize: 14 }                   | change or override the default styling for textRedirectLogin |
+| connexionButtonStyle   | style |      {backgroundColor: "#2FCA74",height: 50,minWidth: "100%",paddingHorizontal: 25}       | modify or replace the default style of the connexion button  |
+| connexionTitleStyle    | style |             {color: "white",fontWeight: "bold",letterSpacing: 1,ontSize: 14}              | change or override the default styling for login text        |
+| titleStyle             | style | {marginVertical: 30,fontWeight: "bold",color: "#454545",fontSize: 36,textAlign: "center", | change or override the default styling for connexion text    |
+
+<p float="center">
+<img src="./assets/images/forgot.png" width="300"/>
+</p>
+
+### after that you can use ResetPassword
+
+# ResetPassword
