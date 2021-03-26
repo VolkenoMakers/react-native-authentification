@@ -150,7 +150,7 @@ export function Register({
           username: userInfo?.short_name,
         };
 
-        registerSocialSubmit(userData);
+        registerSocial(userData);
       } else {
         // type === 'cancel'
       }
@@ -176,7 +176,7 @@ export function Register({
           last_name: result.user.familyName,
           picture: result.user.photoUrl,
         };
-        registerSocialSubmit(userData);
+        registerSocial(userData);
         return result.accessToken;
       } else {
         return { cancelled: true };
@@ -566,7 +566,7 @@ export function Login({
           last_name: result.user.familyName,
           picture: result.user.photoUrl,
         };
-        registerSocialSubmit(userData);
+        registerSocial(userData);
         return result.accessToken;
       } else {
         return { cancelled: true };

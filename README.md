@@ -191,8 +191,8 @@ export default function App() {
 | google                       | boolean  |  false  | Activate to see the google button                                    |
 | registerSocialSubmit         | function |  void   | Function that reacts when one of the social media buttons is clicked |
 | facebookAppId                |  string  |    -    | this is the AppId for Facebook                                       |
-| iosClientId                  |  string  |    -    | this is the iosClientId for Google                                   |
-| androidClientId              |  string  |    -    | this is the androidClientId for Google                               |
+| iosClientId                  |  string  |    -    | this is the iosClientId for Google. It is obligatory                 |
+| androidClientId              |  string  |    -    | this is the androidClientId for Google. It is obligatory             |
 | iosStandaloneAppClientId     |  string  |    -    | this is the iosStandaloneAppClientId for Google                      |
 | androidStandaloneAppClientId |  string  |    -    | this is the androidStandaloneAppClientId for Google                  |
 
