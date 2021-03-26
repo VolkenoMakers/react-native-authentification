@@ -65,7 +65,7 @@ export function Register({
   styles = {},
   OnSubmit,
   pressRedirectLogin,
-  registerSocial,
+  registerSocialSubmit,
   google = false,
   iosClientId,
   androidClientId,
@@ -150,7 +150,7 @@ export function Register({
           username: userInfo?.short_name,
         };
 
-        registerSocial(userData);
+        registerSocialSubmit(userData);
       } else {
         // type === 'cancel'
       }
@@ -176,7 +176,7 @@ export function Register({
           last_name: result.user.familyName,
           picture: result.user.photoUrl,
         };
-        registerSocial(userData);
+        registerSocialSubmit(userData);
         return result.accessToken;
       } else {
         return { cancelled: true };
@@ -495,7 +495,7 @@ export function Login({
   pressRedirectRegister,
   facebook = false,
   google = false,
-  registerSocial,
+  registerSocialSubmit,
   iosClientId,
   androidClientId,
   iosStandaloneAppClientId,
@@ -540,7 +540,7 @@ export function Login({
           username: userInfo?.short_name,
         };
 
-        registerSocial(userData);
+        registerSocialSubmit(userData);
       } else {
         // type === 'cancel'
       }
@@ -566,7 +566,7 @@ export function Login({
           last_name: result.user.familyName,
           picture: result.user.photoUrl,
         };
-        registerSocial(userData);
+        registerSocialSubmit(userData);
         return result.accessToken;
       } else {
         return { cancelled: true };

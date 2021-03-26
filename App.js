@@ -16,14 +16,14 @@ export default function App() {
     Alert.alert("Félicitation", "Connexion réussie");
   };
 
-  const registerSocial = async (data) => {
-    console.log("registerSocial", data);
+  const registerSocialSubmit = async (data) => {
+    console.log("registerSocialSubmit", data);
     Alert.alert("Félicitation", "Connexion réussie");
   };
 
   return (
     <View style={styles.container}>
-      <Register
+      <Login
         OnSubmit={submit}
         setShowPassword={setShowPassword}
         showPassword={showPassword}
@@ -35,8 +35,9 @@ export default function App() {
         setPassword_confirmation={setPassword_confirmation}
         errors={errors}
         setErrors={setErrors}
-        registerSocial={registerSocial}
+        registerSocialSubmit={registerSocialSubmit}
         facebook
+        google
       />
     </View>
   );
