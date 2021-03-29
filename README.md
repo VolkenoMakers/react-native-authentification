@@ -50,7 +50,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <LoginVolkeno
+      <Login
         showPassword={showPassword}
         setShowPassword={setShowPassword}
         email={email}
