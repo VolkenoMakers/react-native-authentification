@@ -32,7 +32,7 @@ yarn add volkeno-react-native-auth
 **First step:** import the component:
 
 ```javascript
-import { Login } from "Auth";
+import { Login } from "volkeno-react-native-auth";
 ```
 
 **Second step:** Use the login
@@ -216,7 +216,7 @@ export default function App() {
 **First step:** import the component:
 
 ```javascript
-import { Register } from "Auth";
+import { Register } from "volkeno-react-native-auth";
 ```
 
 **Second step:** Use the register
@@ -363,7 +363,7 @@ the variables errors and setErrors are mandatory. They allow you to display erro
 **First step:** import the component:
 
 ```javascript
-import { RequestPasswordReset } from "Auth";
+import { RequestPasswordReset } from "volkeno-react-native-auth";
 ```
 
 **Second step:** Use the RequestPasswordReset
@@ -444,7 +444,7 @@ export default function App() {
 **First step:** import the component:
 
 ```javascript
-import { Login } from "Auth";
+import { Login } from "volkeno-react-native-auth";
 ```
 
 **Second step:** Use the login

@@ -1,6 +1,6 @@
 {
   "name": "volkeno-react-native-auth",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a react native complete autehetification by volkeno",
   "main": "index.js",
   "scripts": {
