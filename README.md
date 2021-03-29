@@ -7,13 +7,13 @@ This project is a authentication page with built-in buttons
 Add the dependency:
 
 ```
-npm i volkeno-login
+npm i volkeno-react-native-auth
 ```
 
 or
 
 ```
-yarn add volkeno-login
+yarn add volkeno-react-native-auth
 ```
 
 # Login
