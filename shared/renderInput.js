@@ -23,7 +23,6 @@ export function RenderInput({
         {...options}
         inputStyle={{
           color: "#000",
-          paddingHorizontal: 5,
           fontSize: 14,
           ...inputStyle,
         }}
@@ -112,32 +111,6 @@ export const validate = async (Schema, startLoad, endLoad, value, submit) => {
     });
   return valide;
 };
-const style = StyleSheet.create({
-  input: {
-    height: 40,
-    marginBottom: 5,
-    width: "100%",
-    paddingHorizontal: 5,
-    paddingTop: 5,
-    backgroundColor: "#f1f3f4",
-  },
-  inputFocused: {
-    height: 36,
-    marginBottom: 5,
-    width: "100%",
-    paddingHorizontal: 5,
-    paddingTop: 5,
-    backgroundColor: "#f1f3f4",
-    borderBottomWidth: 2,
-    borderBottomColor: "#db3974",
-  },
-  label: {
-    fontSize: 16,
-    color: "rgba(0,0,0,.6)",
-    marginBottom: 10,
-    marginLeft: 10,
-  },
-});
 
 export default function APpButton({
   small = false,
@@ -152,8 +125,9 @@ export default function APpButton({
       buttonStyle={{
         backgroundColor: Colors.bgApp,
         height: 50,
-        minWidth: "100%",
         paddingHorizontal: 25,
+        borderRadius: 5,
+        marginHorizontal: 5,
         ...buttonStyle,
       }}
       loading={loading}

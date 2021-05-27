@@ -230,7 +230,7 @@ export default function App() {
   const [errors, setErrors] = React.useState({});
 
   const submit = async () => {
-    Alert.alert("Félicitation", "Connexion réussie");
+    Alert.alert("Félicitation", "Inscription réussie");
   };
 
   return (
@@ -271,19 +271,19 @@ the variables errors and setErrors are mandatory. They allow you to display erro
 
 **Props require**
 
-| Property                 |   Type   | Default | Description                                                                     |
-| ------------------------ | :------: | :-----: | ------------------------------------------------------------------------------- |
-| showPassword             | boolean  |  false  | Activate to see the password                                                    |
-| setShowPassword          | function |  void   | Called for allows you to activate or deactivate the visibility of the password. |
-| email                    |  string  |    -    | Enter email address                                                             |
-| setEmail                 | function |  void   | Called for allows you to enter and modify the email variable when typing it.    |
-| password                 |  string  |    -    | Enter password                                                                  |
-| setPassword              | function |  void   | Used to enter and modify the password variable when typed.                      |
-| password_confirmation    |  string  |    -    | Enter Password Confirmation                                                     |
-| setPassword_confirmation | function |  void   | Used to enter and modify the Password Confirmation variable when typed.         |
-| errors                   |  object  |  void   | Object used to store email and password validation errors                       |
-| setErrors                | function |  void   | They allow you to display errors when validating the email and password         |
-| OnSubmit                 | function |  void   | Function that reacts when the registration button is clicked.                   |
+| Property                 |   Type   | Default  | Description                                                                     |
+| ------------------------ | :------: | :------: | ------------------------------------------------------------------------------- |
+| showPassword             | boolean  |  false   | Activate to see the password                                                    |
+| setShowPassword          | function |   void   | Called for allows you to activate or deactivate the visibility of the password. |
+| email                    |  string  | Required | Enter email address                                                             |
+| setEmail                 | function | Required | Called for allows you to enter and modify the email variable when typing it.    |
+| password                 |  string  | Required | Enter password                                                                  |
+| setPassword              | function | Required | Used to enter and modify the password variable when typed.                      |
+| password_confirmation    |  string  | Required | Enter Password Confirmation                                                     |
+| setPassword_confirmation | function | Required | Used to enter and modify the Password Confirmation variable when typed.         |
+| errors                   |  object  | Required | Object used to store email and password validation errors                       |
+| setErrors                | function | Required | They allow you to display errors when validating the email and password         |
+| OnSubmit                 | function | Required | Function that reacts when the registration button is clicked.                   |
 
 **Other props**
 

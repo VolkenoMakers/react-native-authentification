@@ -4,17 +4,16 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  ScrollView,
   Image,
+  SafeAreaView,
 } from "react-native";
 import Yup from "./shared/validator";
 import Colors from "./constants/Colors";
 import { RenderButton, RenderInput } from "./shared/renderInput";
 import Icon from "react-native-vector-icons/Entypo";
 import IonIcon from "react-native-vector-icons/Ionicons";
-import * as Facebook from "expo-facebook";
 import globalStyles from "./constants/globalStyles";
-import * as Google from "expo-google-app-auth";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 /* 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,16 +62,13 @@ export function Register({
   leftIconPhone = {},
   textRedirectLogin = "Je suis déjà inscrit",
   textRedirectLoginStyle = {},
+  ButtonRedirectLoginStyle = {},
   styles = {},
   OnSubmit,
   pressRedirectLogin,
-  registerSocialSubmit,
   google = false,
-  iosClientId,
-  androidClientId,
-  iosStandaloneAppClientId,
-  androidStandaloneAppClientId,
-  facebookAppId,
+  OnSubmitFacebook,
+  OnSubmitGoogle,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -93,12 +89,16 @@ export function Register({
       ),
   });
   const submit = () => {
-    if (password === password_confirmation) {
-      OnSubmit();
-    } else {
-      Alert.alert("Attention", "Vérifier mot de passe");
-    }
+    OnSubmit();
   };
+  const loginFacebook = () => {
+    OnSubmitFacebook();
+  };
+
+  const loginGoogle = () => {
+    OnSubmitGoogle();
+  };
+
   const [loading, setLoading] = React.useState(false);
 
   let onChange = (text) => {
@@ -128,68 +128,13 @@ export function Register({
   let onChangePassword_confirmation = (text) => {
     setPassword_confirmation(text);
   };
-  const loginFacebook = async () => {
-    try {
-      await Facebook.initializeAsync({
-        appId: facebookAppId, //"796915091156923",
-      });
-      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ["public_profile", "email"],
-      });
-      if (type === "success") {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(
-          `https://graph.facebook.com/me?fields=id,last_name,email,short_name,first_name,picture&access_token=${token}`
-        );
-        const userInfo = await response.json();
 
-        const userData = {
-          first_name: userInfo.first_name,
-          last_name: userInfo.last_name,
-          email: userInfo.email,
-          picture: userInfo?.picture?.data.url,
-          username: userInfo?.short_name,
-        };
-
-        registerSocial(userData);
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
-  };
-
-  const loginGoogle = async () => {
-    try {
-      const result = await Google.logInAsync({
-        iosClientId: iosClientId, //`419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
-        androidClientId: androidClientId, //`419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
-        iosStandaloneAppClientId: iosStandaloneAppClientId, //`419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
-        androidStandaloneAppClientId: androidStandaloneAppClientId, // `419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
-        scopes: ["profile", "email"],
-      });
-
-      if (result.type === "success") {
-        const userData = {
-          email: result.user.email,
-          first_name: result.user.givenName,
-          last_name: result.user.familyName,
-          picture: result.user.photoUrl,
-        };
-        registerSocial(userData);
-        return result.accessToken;
-      } else {
-        return { cancelled: true };
-      }
-    } catch (e) {
-      console.log("e login google erreur", e);
-      return { error: true };
-    }
-  };
   return (
-    <View style={{ flex: 1, paddingHorizontal: 20, ...styles }}>
-      <ScrollView bounces={false}>
+    <View style={{ flex: 1, paddingHorizontal: 10, ...styles }}>
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+      >
         <View>
           <Text
             style={{
@@ -336,7 +281,7 @@ export function Register({
                 alignItems: "center",
                 justifyContent: "space-between",
                 paddingHorizontal: 10,
-                marginBottom: 30,
+                marginTop: 20,
               }}
             >
               {facebook !== false && (
@@ -353,9 +298,7 @@ export function Register({
                     ...globalStyles.buttonShadow,
                     backgroundColor: "#fff",
                   }}
-                  onPress={() => {
-                    loginFacebook();
-                  }}
+                  onPress={loginFacebook}
                 >
                   <IonIcon
                     name="logo-facebook"
@@ -389,9 +332,7 @@ export function Register({
                     ...globalStyles.buttonShadow,
                     backgroundColor: "#fff",
                   }}
-                  onPress={() => {
-                    loginGoogle();
-                  }}
+                  onPress={loginGoogle}
                 >
                   <Image
                     source={require("./assets/icons/google.png")}
@@ -416,32 +357,39 @@ export function Register({
               )}
             </View>
           )}
-
-          <RenderButton
-            title={textButtonRegister}
-            Schema={Schema}
-            startLoad={() => setLoading(true)}
-            endLoad={() => setLoading(false)}
-            setErrors={(error) => setErrors(error)}
-            email={email}
-            password={password}
-            value={{
-              email,
-              password,
-              password_confirmation,
-              first_name: first_name !== false,
-              last_name: last_name !== false,
+          <View
+            style={{
+              marginTop: 30,
             }}
-            submit={submit}
-            styles={{ backgroundColor: "red" }}
-            titleStyle={connexionTitleStyle}
-            buttonStyle={connexionButtonStyle}
-          />
+          >
+            <RenderButton
+              title={textButtonRegister}
+              Schema={Schema}
+              startLoad={() => setLoading(true)}
+              endLoad={() => setLoading(false)}
+              setErrors={(error) => setErrors(error)}
+              email={email}
+              password={password}
+              value={{
+                email,
+                password,
+                password_confirmation,
+                first_name: first_name !== false,
+                last_name: last_name !== false,
+              }}
+              submit={submit}
+              styles={{ backgroundColor: "red" }}
+              titleStyle={connexionTitleStyle}
+              buttonStyle={connexionButtonStyle}
+            />
+          </View>
         </View>
         <TouchableOpacity
           style={{
             alignSelf: "flex-end",
-            marginTop: Dimensions.get("window").height * 0.05,
+            marginTop: 30,
+            marginBottom: 20,
+            ...ButtonRedirectLoginStyle,
           }}
           onPress={pressRedirectLogin}
         >
@@ -456,7 +404,7 @@ export function Register({
             {textRedirectLogin}
           </Text>
         </TouchableOpacity>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
@@ -468,19 +416,19 @@ export function Register({
  */
 
 export function Login({
-  setErrors,
-  errors,
-  setPassword,
-  password,
-  setEmail,
-  email,
-  setShowPassword,
+  setErrors = null,
+  errors = null,
+  setPassword = null,
+  password = "",
+  setEmail = null,
+  email = "",
+  setShowPassword = null,
   showPassword = false,
   title = "Connexion",
   labelEmail = "Adresse mail",
   labelPassword = "Mot de Passe",
   titleStyle = {},
-  forgotPasswordText,
+  forgotPasswordText = null,
   forgotPasswordTextStyle = {},
   colorIconPassword = Colors.bgApp,
   textConnexion = "SE CONNECTER",
@@ -491,17 +439,13 @@ export function Login({
   textRedirectRegister = "Je n'ai pas encore de compte",
   textRedirectRegisterStyle = {},
   styles = {},
-  OnSubmit,
-  pressForgotPassword,
-  pressRedirectRegister,
+  OnSubmit = null,
+  pressForgotPassword = null,
+  pressRedirectRegister = null,
   facebook = false,
   google = false,
-  registerSocialSubmit,
-  iosClientId,
-  androidClientId,
-  iosStandaloneAppClientId,
-  androidStandaloneAppClientId,
-  facebookAppId,
+  OnSubmitGoogle = null,
+  OnSubmitFacebook = null,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -510,75 +454,27 @@ export function Login({
   const submit = () => {
     OnSubmit();
   };
+
+  const loginFacebook = () => {
+    OnSubmitFacebook();
+  };
+
+  const loginGoogle = () => {
+    OnSubmitGoogle();
+  };
+
   const [loading, setLoading] = React.useState(false);
 
   let onChange = (text) => {
     setEmail(text);
   };
+
   let onChangePassword = (text) => {
     setPassword(text);
   };
-  const loginFacebook = async () => {
-    try {
-      await Facebook.initializeAsync({
-        appId: facebookAppId, //"796915091156923",
-      });
-      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ["public_profile", "email"],
-      });
-      if (type === "success") {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(
-          `https://graph.facebook.com/me?fields=id,last_name,email,short_name,first_name,picture&access_token=${token}`
-        );
-        const userInfo = await response.json();
 
-        const userData = {
-          first_name: userInfo.first_name,
-          last_name: userInfo.last_name,
-          email: userInfo.email,
-          picture: userInfo?.picture?.data.url,
-          username: userInfo?.short_name,
-        };
-
-        registerSocialSubmit(userData);
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
-  };
-
-  const loginGoogle = async () => {
-    try {
-      const result = await Google.logInAsync({
-        iosClientId: iosClientId, //`419213678083-3q2fhvq74fq8bsigjk2mljifh0ucimck.apps.googleusercontent.com`,
-        androidClientId: androidClientId, // `419213678083-7lt8j2oda0je0fbvglv4c35g9r2a7dge.apps.googleusercontent.com`,
-        iosStandaloneAppClientId: iosStandaloneAppClientId, //`419213678083-uv5r93l0p3blg4p673vqh9v7tbo3vr4a.apps.googleusercontent.com`,
-        androidStandaloneAppClientId: androidStandaloneAppClientId, //`419213678083-ou6dnpduq01c622j639b8s4hei8i4cbk.apps.googleusercontent.com`,
-        scopes: ["profile", "email"],
-      });
-
-      if (result.type === "success") {
-        const userData = {
-          email: result.user.email,
-          first_name: result.user.givenName,
-          last_name: result.user.familyName,
-          picture: result.user.photoUrl,
-        };
-        registerSocial(userData);
-        return result.accessToken;
-      } else {
-        return { cancelled: true };
-      }
-    } catch (e) {
-      console.log("e login google erreur", e);
-      return { error: true };
-    }
-  };
   return (
-    <View style={{ flex: 1, paddingHorizontal: 20, ...styles }}>
+    <View style={{ flex: 1, paddingHorizontal: 10, ...styles }}>
       <View
         style={{
           marginTop: Dimensions.get("window").height * 0.1,
@@ -619,7 +515,7 @@ export function Login({
           leftIcon={leftIconPassword}
           textContentType={"password"}
           rightIcon={
-            setShowPassword !== undefined &&
+            setShowPassword !== null &&
             (!showPassword ? (
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                 <Icon name="eye" size={24} color={colorIconPassword} />
@@ -786,10 +682,10 @@ export function Login({
  */
 
 export function RequestPasswordReset({
-  setErrors,
-  errors,
-  setEmail,
-  email,
+  setErrors = null,
+  errors = "",
+  setEmail = null,
+  email = "",
   title = "Veuillez entrer votre email Nous vous enverrons un lien pour modifier le mot de passe",
   labelEmail = "Adresse mail",
   titleStyle = {},
@@ -800,8 +696,8 @@ export function RequestPasswordReset({
   textRedirectLogin = "Je suis déjà inscrit",
   textRedirectLoginStyle = {},
   styles = {},
-  OnSubmit,
-  pressRedirectLogin,
+  OnSubmit = null,
+  pressRedirectLogin = null,
 }) {
   const Schema = Yup.object().shape({
     email: Yup.string().email().required().label("Adresse Mail"),
@@ -963,111 +859,124 @@ export function ResetPassword({
         flex: 1,
         justifyContent: "center",
         paddingHorizontal: 20,
+        paddingTop: 30,
         ...styles,
       }}
     >
-      <Text
-        style={{
-          fontSize: 16,
-          color: "rgba(0,0,0,.6)",
-          ...titleStyle,
-        }}
-      >
-        {title}
-      </Text>
-      <View
-        style={{
-          marginTop: Dimensions.get("window").height * 0.1,
-        }}
-      >
-        <RenderInput
-          value={code}
-          errors={errors}
-          error={errors?.code}
-          label={labelCode}
-          onChange={onChangeCode}
-          leftIcon={leftIconCode}
-          keyboardType={"number-pad"}
-        />
-        <RenderInput
-          value={email}
-          errors={errors}
-          error={errors?.email}
-          label={labelEmail}
-          onChange={onChange}
-          leftIcon={leftIconEmail}
-          textContentType={"username"}
-          autoCapitalize={"none"}
-          keyboardType={"email-address"}
-        />
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAwareScrollView>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "rgba(0,0,0,.6)",
+              ...titleStyle,
+            }}
+          >
+            {title}
+          </Text>
+          <View
+            style={{
+              marginTop: Dimensions.get("window").height * 0.1,
+            }}
+          >
+            <RenderInput
+              value={code}
+              errors={errors}
+              error={errors?.code}
+              label={labelCode}
+              onChange={onChangeCode}
+              leftIcon={leftIconCode}
+              keyboardType={"number-pad"}
+            />
+            <RenderInput
+              value={email}
+              errors={errors}
+              error={errors?.email}
+              label={labelEmail}
+              onChange={onChange}
+              leftIcon={leftIconEmail}
+              textContentType={"username"}
+              autoCapitalize={"none"}
+              keyboardType={"email-address"}
+            />
 
-        <RenderInput
-          value={password}
-          errors={errors}
-          error={errors?.password}
-          label={labelPassword}
-          onChange={onChangePassword}
-          leftIcon={leftIconPassword}
-          textContentType={"password"}
-          rightIcon={
-            setShowPassword !== undefined &&
-            (!showPassword ? (
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <Icon name="eye" size={24} color={colorIconPassword} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <Icon
-                  name="eye-with-line"
-                  size={24}
-                  color={colorIconPassword}
-                />
-              </TouchableOpacity>
-            ))
-          }
-          secureTextEntry={!showPassword}
-        />
+            <RenderInput
+              value={password}
+              errors={errors}
+              error={errors?.password}
+              label={labelPassword}
+              onChange={onChangePassword}
+              leftIcon={leftIconPassword}
+              textContentType={"password"}
+              rightIcon={
+                setShowPassword !== undefined &&
+                (!showPassword ? (
+                  <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Icon name="eye" size={24} color={colorIconPassword} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Icon
+                      name="eye-with-line"
+                      size={24}
+                      color={colorIconPassword}
+                    />
+                  </TouchableOpacity>
+                ))
+              }
+              secureTextEntry={!showPassword}
+            />
 
-        <RenderInput
-          value={confrimPassword}
-          errors={errors}
-          error={errors?.confrimPassword}
-          label={labelConfrimPassword}
-          onChange={onChangeConfrimPassword}
-          leftIcon={leftIconPassword}
-          textContentType={"password"}
-          rightIcon={
-            setShowPassword !== undefined &&
-            (!showPassword ? (
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <Icon name="eye" size={24} color={colorIconPassword} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <Icon
-                  name="eye-with-line"
-                  size={24}
-                  color={colorIconPassword}
-                />
-              </TouchableOpacity>
-            ))
-          }
-          secureTextEntry={!showPassword}
-        />
+            <RenderInput
+              value={confrimPassword}
+              errors={errors}
+              error={errors?.confrimPassword}
+              label={labelConfrimPassword}
+              onChange={onChangeConfrimPassword}
+              leftIcon={leftIconPassword}
+              textContentType={"password"}
+              rightIcon={
+                setShowPassword !== undefined &&
+                (!showPassword ? (
+                  <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Icon name="eye" size={24} color={colorIconPassword} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Icon
+                      name="eye-with-line"
+                      size={24}
+                      color={colorIconPassword}
+                    />
+                  </TouchableOpacity>
+                ))
+              }
+              secureTextEntry={!showPassword}
+            />
 
-        <RenderButton
-          title={textValidate}
-          Schema={Schema}
-          startLoad={() => setLoading(true)}
-          endLoad={() => setLoading(false)}
-          setErrors={(error) => setErrors(error)}
-          value={{ email, code, password, confrimPassword }}
-          submit={submit}
-          styles={{ backgroundColor: "red" }}
-          titleStyle={connexionTitleStyle}
-          buttonStyle={connexionButtonStyle}
-        />
-      </View>
+            <RenderButton
+              title={textValidate}
+              Schema={Schema}
+              startLoad={() => setLoading(true)}
+              endLoad={() => setLoading(false)}
+              setErrors={(error) => setErrors(error)}
+              value={{ email, code, password, confrimPassword }}
+              submit={submit}
+              styles={{ backgroundColor: "red" }}
+              titleStyle={connexionTitleStyle}
+              buttonStyle={connexionButtonStyle}
+            />
+          </View>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
     </View>
   );
 }
