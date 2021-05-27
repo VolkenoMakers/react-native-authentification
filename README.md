@@ -50,7 +50,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <LoginVolkeno
+      <Login
         showPassword={showPassword}
         setShowPassword={setShowPassword}
         email={email}
@@ -185,16 +185,12 @@ export default function App() {
 
 **Social props**
 
-| Property                     |   Type   | Default | Description                                                           |
-| ---------------------------- | :------: | :-----: | --------------------------------------------------------------------- |
-| facebook                     | boolean  |  false  | Activate to see the facebook button                                   |
-| google                       | boolean  |  false  | Activate to see the google button                                     |
-| registerSocialSubmit         | function |  void   | Function that reacts when one of the social media buttons is clicked  |
-| facebookAppId                |  string  |    -    | this is the AppId for Facebook. It is obligatory                      |
-| iosClientId                  |  string  |    -    | this is the iosClientId for Google. It is obligatory                  |
-| androidClientId              |  string  |    -    | this is the androidClientId for Google. It is obligatory              |
-| iosStandaloneAppClientId     |  string  |    -    | this is the iosStandaloneAppClientId for Google. It is obligatory     |
-| androidStandaloneAppClientId |  string  |    -    | this is the androidStandaloneAppClientId for Google. It is obligatory |
+| Property         |  Type   | Default | Description                                                                |
+| ---------------- | :-----: | :-----: | -------------------------------------------------------------------------- |
+| facebook         | boolean |  false  | Activate to see the facebook button                                        |
+| google           | boolean |  false  | Activate to see the google button                                          |
+| OnSubmitFacebook | string  |  null   | Function that reacts when the facebook button is clicked. It is obligatory |
+| OnSubmitGoogle   | string  |  null   | Function that reacts when the google button is clicked. It is obligatory   |
 
 <p float="center">
 <img src="./assets/images/loginSocial.png" width="300"/>
@@ -332,16 +328,12 @@ the variables errors and setErrors are mandatory. They allow you to display erro
 
 **Social props**
 
-| Property                     |   Type   | Default | Description                                                           |
-| ---------------------------- | :------: | :-----: | --------------------------------------------------------------------- |
-| facebook                     | boolean  |  false  | Activate to see the facebook button                                   |
-| google                       | boolean  |  false  | Activate to see the google button                                     |
-| registerSocialSubmit         | function |  void   | Function that reacts when one of the social media buttons is clicked  |
-| facebookAppId                |  string  |    -    | this is the AppId for Facebook. It is obligatory                      |
-| iosClientId                  |  string  |    -    | this is the iosClientId for Google. It is obligatory                  |
-| androidClientId              |  string  |    -    | this is the androidClientId for Google. It is obligatory              |
-| iosStandaloneAppClientId     |  string  |    -    | this is the iosStandaloneAppClientId for Google. It is obligatory     |
-| androidStandaloneAppClientId |  string  |    -    | this is the androidStandaloneAppClientId for Google. It is obligatory |
+| Property         |  Type   | Default | Description                                                                |
+| ---------------- | :-----: | :-----: | -------------------------------------------------------------------------- |
+| facebook         | boolean |  false  | Activate to see the facebook button                                        |
+| google           | boolean |  false  | Activate to see the google button                                          |
+| OnSubmitFacebook | string  |  null   | Function that reacts when the facebook button is clicked. It is obligatory |
+| OnSubmitGoogle   | string  |  null   | Function that reacts when the google button is clicked. It is obligatory   |
 
 <p float="center">
 <img src="./assets/images/registerSocial.png" width="300"/>
