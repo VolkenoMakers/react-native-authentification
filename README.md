@@ -165,10 +165,10 @@ export default function App() {
         }}
         textConnexion={"Je me connect"}
         leftIconPassword={
-          <Icon name="ios-lock-open-outline" size={20} color={Colors.bgApp2} />
+          <Icon name="ios-lock-open-outline" size={20} color={COLORS.bgApp2} />
         }
         leftIconEmail={
-          <Icon name="mail-outline" size={20} color={Colors.bgApp2} />
+          <Icon name="mail-outline" size={20} color={COLORS.bgApp2} />
         }
         textRedirectRegisterStyle={{ color: "red" }}
         textRedirectRegister="Je n'ai pas encore de compte"

@@ -1,8 +1,8 @@
 const globalStyles = {
   buttonShadow: {
-    shadowColor: "#000",
+    shadowColor: "#ccc",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.5,
     elevation: 5,
     borderWidth: 0,
     borderColor: 0,

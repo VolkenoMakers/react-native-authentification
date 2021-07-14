@@ -1,13 +1,13 @@
 import React from "react";
 import { View } from "react-native";
 import { Input, Button } from "react-native-elements";
-import Colors from "../constants/Colors";
+import { COLORS } from "../constants/constants";
 import globalStyles from "../constants/globalStyles";
 import _ from "lodash";
 
 export function RenderInput({
-  value = "",
-  label = "",
+  value,
+  label,
   onChange = {},
   inputStyle = {},
   containerStyle = {},
@@ -44,7 +44,7 @@ export function RenderInput({
           color: "#ccc",
         }}
         errorMessage={error}
-        errorStyle={{ color: Colors.errorBackground }}
+        errorStyle={{ color: COLORS.errorBackground }}
         onChangeText={onChange}
         value={value}
         placeholderTextColor="#707070"
@@ -123,7 +123,7 @@ export default function APpButton({
   return (
     <Button
       buttonStyle={{
-        backgroundColor: Colors.bgApp,
+        backgroundColor: COLORS.bgApp,
         height: 50,
         paddingHorizontal: 25,
         borderRadius: 5,
